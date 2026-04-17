@@ -10,18 +10,7 @@
         .font-ar { font-family: 'Noto Kufi Arabic', sans-serif; }
         .font-en { font-family: 'Inter', sans-serif; }
         .card-shadow { box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04); }
-        
-        /* সুরক্ষা: টেক্সট সিলেকশন বন্ধ করা */
-        body { 
-            background-color: #f4f7fa; 
-            transition: all 0.2s ease; 
-            overflow-x: hidden;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
+        body { background-color: #f4f7fa; transition: all 0.2s ease; overflow-x: hidden; }
         .hidden { display: none !important; }
         
         /* Mobile Overlay Menu */
@@ -38,6 +27,8 @@
             [dir="rtl"] .mobile-align { text-align: right !important; }
             [dir="ltr"] .mobile-align { text-align: left !important; }
             .status-badge { width: fit-content !important; display: inline-block !important; }
+            
+            /* Form Adjustment for Mobile */
             #contact-popup { width: calc(100% - 40px) !important; left: 20px !important; right: 20px !important; bottom: 85px !important; }
         }
         @media (min-width: 768px) {
@@ -46,7 +37,7 @@
         }
         .label-text { color: #64748b !important; font-weight: 500; }
 
-        /* Floating Help Button */
+        /* Floating Help Button (Image 1) */
         .help-fab {
             position: fixed; bottom: 25px; z-index: 3000;
             width: 58px; height: 58px; background-color: #1e3a8a;
@@ -57,7 +48,7 @@
         [dir="rtl"] .help-fab { left: 25px; }
         [dir="ltr"] .help-fab { right: 25px; }
 
-        /* Contact Popup */
+        /* Contact Popup (Image 2) */
         #contact-popup {
             position: fixed; bottom: 95px; z-index: 3500;
             width: 360px; max-height: 80vh; background: white;
@@ -80,7 +71,7 @@
         .attach-box { border: 1px dashed #cbd5e1; padding: 15px; text-align: center; border-radius: 4px; color: #475569; cursor: pointer; background: #f8fafc; }
     </style>
 </head>
-<body class="text-[#334155] font-ar text-[12px]" id="body-tag" oncontextmenu="return false;">
+<body class="text-[#334155] font-ar text-[12px]" id="body-tag">
 
     <div class="help-fab" onclick="toggleContactForm()">
         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -155,7 +146,7 @@
         <div class="max-w-6xl mx-auto flex justify-between items-center w-full">
             <button onclick="toggleMenu()" class="mobile-hamburger text-[#1e3a8a] text-2xl">☰</button>
             <div class="flex-shrink-0">
-                <img src="logo.svg" alt="Ajeer Logo" class="h-7 md:h-11" oncontextmenu="return false;" ondragstart="return false;">
+                <img src="logo.svg" alt="Ajeer Logo" class="h-7 md:h-11">
             </div>
             <div class="pc-flex hidden items-center gap-7">
                 <div class="flex items-center gap-6 text-[#475569] font-semibold">
@@ -232,34 +223,36 @@
             </div>
         </main>
 
+        <div class="max-w-6xl mx-auto px-4 mb-24 flex justify-end">
+            <button onclick="copyCurrentLink()" class="w-full md:w-auto bg-[#3b5998] hover:bg-[#2d4373] text-white px-6 py-3 rounded-md flex items-center justify-center gap-3 transition-all font-bold text-[13px]">
+                <span class="lang-ar">نسخ رابط الصفحة</span>
+                <span class="lang-en hidden font-en">Copy link to this page</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.828a4 4 0 015.656 0l4 4a4 4 0 01-5.656 5.656l-1.103-1.103" /></svg>
+            </button>
+        </div>
+
         <footer class="bg-white border-t border-gray-100 py-8 px-6 md:px-12">
             <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
                 <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 order-2 md:order-1">
-                    <img src="logo.svg" alt="Ajeer" class="h-9 md:h-11" oncontextmenu="return false;">
+                    <img src="logo.svg" alt="Ajeer" class="h-9 md:h-11">
                     <div class="flex flex-col md:flex-row gap-2 md:gap-4 text-gray-400 text-[12px]">
                         <span class="lang-ar">© ٢٠٢٦ / أجير حلول الموارد البشرية</span>
                         <span class="lang-en hidden font-en">© 2026 / Ajeer HRS</span>
+                        <div class="flex gap-4">
+                            <a href="https://ajeer.qiwa.sa/landing/privacy" target="_blank" class="hover:text-blue-800 transition"><span class="lang-ar">سياسة الخصوصية</span><span class="lang-en hidden font-en">Privacy Policy</span></a>
+                            <a href="https://ajeer.qiwa.sa/landing/terms" target="_blank" class="hover:text-blue-800 transition"><span class="lang-ar">الشروط والأحكام</span><span class="lang-en hidden font-en">Terms & Conditions</span></a>
+                        </div>
                     </div>
+                    <button onclick="toggleLanguage()" class="text-blue-800 font-bold text-[12px]">🌐 <span class="lang-ar">English</span><span class="lang-en hidden">العربية</span></button>
                 </div>
                 <div class="flex items-center gap-6 order-1 md:order-2">
-                    <img src="tk.svg" class="h-8 md:h-10" oncontextmenu="return false;">
-                    <img src="hr.svg" class="h-10 md:h-12" oncontextmenu="return false;">
+                    <img src="tk.svg" class="h-8 md:h-10"><img src="hr.svg" class="h-10 md:h-12">
                 </div>
             </div>
         </footer>
     </div>
 
     <script>
-        // সুরক্ষা ১: রাইট ক্লিক বন্ধ করা
-        document.addEventListener('contextmenu', e => e.preventDefault());
-
-        // সুরক্ষা ২: কিবোর্ড শর্টকাট বন্ধ করা (Ctrl+C, Ctrl+U, F12, Ctrl+Shift+I)
-        document.onkeydown = function(e) {
-            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 83 || (e.shiftKey && e.keyCode === 73)) || e.keyCode === 123) {
-                return false;
-            }
-        };
-
         function toggleMenu() { document.getElementById('mobile-overlay').classList.toggle('active'); }
         function toggleContactForm() { document.getElementById('contact-popup').classList.toggle('active'); }
         
@@ -282,6 +275,12 @@
                 arElements.forEach(el => el.classList.remove('hidden'));
                 currentLang = 'ar';
             }
+        }
+        
+        function copyCurrentLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert(currentLang === 'ar' ? "تم نسخ الرابط بنجاح" : "Link copied to clipboard!");
+            });
         }
     </script>
 </body>
