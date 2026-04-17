@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="main-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajeer Permit Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        .font-ar { font-family: 'Noto Kufi Arabic', sans-serif; }
+        .font-en { font-family: 'Inter', sans-serif; }
+        .card-shadow { box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04); }
+        body { background-color: #f4f7fa; transition: all 0.2s ease; overflow-x: hidden; }
+        .hidden { display: none !important; }
+        
+        /* Blur Content Style */
+        #content-area { filter: blur(12px); pointer-events: none; user-select: none; transition: filter 0.6s ease; }
+        #content-area.verified { filter: blur(0); pointer-events: auto; user-select: auto; }
+        
+        /* Captcha Popup Overlay */
+        #captcha-container {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(244, 247, 250, 0.95);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        /* Mobile Overlay Menu */
+        #mobile-overlay {
+            position: fixed; inset: 0; background: white; z-index: 1000;
+            display: none; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+            text-align: center;
+        }
+        #mobile-overlay.active { display: flex; }
+        .menu-item { font-size: 16px; color: #475569; font-weight: 600; text-decoration: none; }
+
+        @media (max-width: 767px) {
+            .mobile-hide { display: none !important; }
+            [dir="rtl"] .mobile-align { text-align: right !important; }
+            [dir="ltr"] .mobile-align { text-align: left !important; }
+            .status-badge { width: fit-content !important; display: inline-block !important; }
+        }
+        @media (min-width: 768px) {
+            .pc-flex { display: flex !important; }
+            .mobile-hamburger { display: none !important; }
+        }
+        .label-text { color: #64748b !important; font-weight: 500; }
+    </style>
+</head>
+<body class="text-[#334155] font-ar text-[12px]" id="body-tag">
+
+    <div id="captcha-container">
+        <div class="bg-white p-8 rounded-xl card-shadow border border-gray-100 flex flex-col items-center">
+            <h3 class="mb-6 font-bold text-[16px] lang-ar">يرجى التحقق من الكابتشا للاستمرار</h3>
+            <h3 class="mb-6 font-bold text-[16px] lang-en hidden">Please verify reCAPTCHA to continue</h3>
+            <div class="g-recaptcha" data-sitekey="6Ldj67osAAAAABW7uAG8MrNg8uaBrJ7Pqm5KvPjq" data-callback="onCaptchaSuccess"></div>
+        </div>
+    </div>
+
+    <div id="mobile-overlay">
+        <button onclick="toggleMenu()" class="absolute top-6 left-6 text-[#1e3a8a] text-3xl">✕</button>
+        <button onclick="toggleLanguage(); toggleMenu()" class="menu-item flex items-center gap-2">
+            <span class="lang-ar font-en">English 🌐</span>
+            <span class="lang-en hidden font-ar">العربية 🌐</span>
+        </button>
+        <a href="https://qiwa.sa/en" target="_blank" class="menu-item">
+            <span class="lang-ar">مركز المعرفة</span><span class="lang-en hidden font-en">Knowledge Center</span>
+        </a>
+        <a href="https://sso.qiwa.sa/sign-in" target="_blank" class="menu-item">
+            <span class="lang-ar">تسجيل الدخول</span><span class="lang-en hidden font-en">Sign in</span>
+        </a>
+        <a href="https://sso.qiwa.sa/en/registration" target="_blank" class="bg-[#1e3a8a] text-white px-10 py-3 rounded-md font-bold text-[15px]">
+            <span class="lang-ar">سجل الآن</span><span class="lang-en hidden font-en">Register now</span>
+        </a>
+    </div>
+
+    <header class="bg-white py-3 px-4 md:px-12 border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center w-full">
+            <button onclick="toggleMenu()" class="mobile-hamburger text-[#1e3a8a] text-2xl">☰</button>
+            <div class="flex-shrink-0">
+                <img src="logo.svg" alt="Ajeer Logo" class="h-7 md:h-11">
+            </div>
+            <div class="pc-flex hidden items-center gap-7">
+                <div class="flex items-center gap-6 text-[#475569] font-semibold">
+                    <a href="https://qiwa.sa/en" target="_blank" class="hover:text-blue-800 transition">
+                        <span class="lang-ar">مركز المعرفة</span><span class="lang-en hidden font-en">Knowledge Center</span>
+                    </a>
+                    <a href="https://sso.qiwa.sa/sign-in" target="_blank" class="hover:text-blue-800 transition">
+                        <span class="lang-ar">تسجيل الدخول</span><span class="lang-en hidden font-en">Sign in</span>
+                    </a>
+                </div>
+                <button onclick="toggleLanguage()" class="flex items-center gap-1 font-bold text-[#1e3a8a]">
+                    <span class="lang-ar font-en">EN</span><span class="lang-en hidden font-ar">AR</span>
+                </button>
+                <a href="https://sso.qiwa.sa/en/registration" target="_blank" class="bg-[#1e3a8a] text-white px-5 py-2.5 rounded-md font-bold text-[13px]">
+                    <span class="lang-ar">سجل الآن</span><span class="lang-en hidden font-en">Register now</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div id="content-area">
+        <main class="max-w-6xl mx-auto mt-6 md:mt-12 px-4 mb-10">
+            <h1 class="text-[18px] md:text-[22px] font-bold text-[#2d3748] mb-6 md:mb-10 mobile-align">
+                <span class="lang-ar">تصريح أجير لحلول الموارد البشرية</span>
+                <span class="lang-en hidden font-en">Ajeer HRS permit</span>
+            </h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div class="bg-white rounded-lg card-shadow overflow-hidden">
+                    <div class="bg-[#fcfcfc] px-5 py-4 border-b border-gray-100 mobile-align">
+                        <h2 class="font-bold text-[13px] lang-ar">معلومات التصريح</h2>
+                        <h2 class="font-bold text-[13px] lang-en hidden font-en uppercase">Permit Information</h2>
+                    </div>
+                    <div class="p-5 space-y-4 mobile-align">
+                        <div>
+                            <p class="text-[11px] label-text mb-0.5"><span class="lang-ar">اسم العامل:</span><span class="lang-en hidden font-en">Laborer's name:</span></p>
+                            <p class="font-bold text-[#1e293b] text-[14px]">Mozibur Rahman Sagor</p>
+                        </div>
+                        <div>
+                            <p class="text-[11px] label-text mb-1.5"><span class="lang-ar">حالة التصريح:</span><span class="lang-en hidden font-en">Permit status:</span></p>
+                            <span class="bg-[#00c07f] text-white px-4 py-1 rounded text-[10px] font-bold status-badge uppercase">
+                                <span class="lang-ar">ساري</span><span class="lang-en hidden font-en">Active</span>
+                            </span>
+                        </div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">تاريخ بداية التصريح:</span><span class="lang-en hidden font-en">Start date:</span></p><p class="font-bold font-en">2025-09-01</p></div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">تاريخ انتهاء التصريح:</span><span class="lang-en hidden font-en">Expiration date:</span></p><p class="font-bold font-en">2026-05-22</p></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg card-shadow overflow-hidden">
+                    <div class="bg-[#fcfcfc] px-5 py-4 border-b border-gray-100 mobile-align">
+                        <h2 class="font-bold text-[13px] lang-ar">المنشأة المستفيدة</h2>
+                        <h2 class="font-bold text-[13px] lang-en hidden font-en uppercase">Beneficiary Company</h2>
+                    </div>
+                    <div class="p-5 space-y-4 mobile-align">
+                        <div>
+                            <p class="text-[11px] label-text mb-0.5"><span class="lang-ar">اسم المنشأة:</span><span class="lang-en hidden font-en">Establishment name:</span></p>
+                            <p class="font-bold text-[#1e293b] leading-relaxed">شركة فرع شركة السويدي اليكتريك لمشروعات نظم القوى ش.م</p>
+                        </div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">رقم المنشأة:</span><span class="lang-en hidden font-en">Establishment number:</span></p><p class="font-bold font-en">9-1346646</p></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg card-shadow overflow-hidden">
+                    <div class="bg-[#fcfcfc] px-5 py-4 border-b border-gray-100 mobile-align">
+                        <h2 class="font-bold text-[13px] lang-ar">شركة الإستقدام</h2>
+                        <h2 class="font-bold text-[13px] lang-en hidden font-en uppercase">Istiqdam Company</h2>
+                    </div>
+                    <div class="p-5 space-y-4 mobile-align">
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">اسم المنشأة:</span><span class="lang-en hidden font-en">Establishment name:</span></p><p class="font-bold text-[#1e293b]">شركة مهارة للموارد البشرية</p></div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">رقم المنشأة:</span><span class="lang-en hidden font-en">Establishment number:</span></p><p class="font-bold font-en">1-355270</p></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="max-w-6xl mx-auto px-4 mb-24 flex justify-end">
+            <button onclick="copyCurrentLink()" class="w-full md:w-auto bg-[#3b5998] hover:bg-[#2d4373] text-white px-6 py-3 rounded-md flex items-center justify-center gap-3 transition-all font-bold text-[13px]">
+                <span class="lang-ar">نسখ رابط الصفحة</span>
+                <span class="lang-en hidden font-en">Copy link to this page</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.828a4 4 0 015.656 0l4 4a4 4 0 01-5.656 5.656l-1.103-1.103" /></svg>
+            </button>
+        </div>
+
+        <footer class="bg-white border-t border-gray-100 py-8 px-6 md:px-12">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 order-2 md:order-1">
+                    <img src="logo.svg" alt="Ajeer" class="h-9 md:h-11">
+                    <div class="flex flex-col md:flex-row gap-2 md:gap-4 text-gray-400 text-[12px]">
+                        <span class="lang-ar">© ٢٠٢٦ / أجير حلول الموارد البشرية</span>
+                        <span class="lang-en hidden font-en">© 2026 / Ajeer HRS</span>
+                        <div class="flex gap-4">
+                            <a href="https://ajeer.qiwa.sa/landing/privacy" target="_blank" class="hover:text-blue-800 transition"><span class="lang-ar">سياسة الخصوصية</span><span class="lang-en hidden font-en">Privacy Policy</span></a>
+                            <a href="https://ajeer.qiwa.sa/landing/terms" target="_blank" class="hover:text-blue-800 transition"><span class="lang-ar">الشروط والأحكام</span><span class="lang-en hidden font-en">Terms & Conditions</span></a>
+                        </div>
+                    </div>
+                    <button onclick="toggleLanguage()" class="text-blue-800 font-bold text-[12px]">🌐 <span class="lang-ar">English</span><span class="lang-en hidden">العربية</span></button>
+                </div>
+                <div class="flex items-center gap-6 order-1 md:order-2">
+                    <img src="tk.svg" alt="TK" class="h-8 md:h-10">
+                    <img src="hr.svg" alt="HR" class="h-10 md:h-12">
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function onCaptchaSuccess() {
+            document.getElementById('captcha-container').classList.add('hidden');
+            document.getElementById('content-area').classList.add('verified');
+        }
+
+        function toggleMenu() { document.getElementById('mobile-overlay').classList.toggle('active'); }
+        
+        let currentLang = 'ar';
+        function toggleLanguage() {
+            const htmlTag = document.getElementById('main-html');
+            const bodyTag = document.getElementById('body-tag');
+            const arElements = document.querySelectorAll('.lang-ar');
+            const enElements = document.querySelectorAll('.lang-en');
+            if (currentLang === 'ar') {
+                htmlTag.setAttribute('dir', 'ltr');
+                bodyTag.classList.remove('font-ar'); bodyTag.classList.add('font-en');
+                arElements.forEach(el => el.classList.add('hidden'));
+                enElements.forEach(el => el.classList.remove('hidden'));
+                currentLang = 'en';
+            } else {
+                htmlTag.setAttribute('dir', 'rtl');
+                bodyTag.classList.remove('font-en'); bodyTag.classList.add('font-ar');
+                enElements.forEach(el => el.classList.add('hidden'));
+                arElements.forEach(el => el.classList.remove('hidden'));
+                currentLang = 'ar';
+            }
+        }
+        
+        function copyCurrentLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert(currentLang === 'ar' ? "تم نسخ الرابط بنجاح" : "Link copied to clipboard!");
+            });
+        }
+    </script>
+</body>
+</html>
