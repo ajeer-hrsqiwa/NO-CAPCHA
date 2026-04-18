@@ -4,6 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajeer HR Solutions</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+
+<style>
+    /* টেক্সট সিলেক্ট করা বন্ধ করার জন্য */
+    body {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+</style>
+
+<script>
+    // ১. রাইট ক্লিক বন্ধ করা
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // ২. কিবোর্ড শর্টকাট (Ctrl+C, Ctrl+U, F12) এবং সোর্স কোড দেখা বন্ধ করা
+    document.onkeydown = function(e) {
+        if (
+            e.keyCode === 123 || // F12
+            (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 83)) || // Ctrl+C, U, S
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) // Ctrl+Shift+I/J
+        ) {
+            // কেউ Ctrl+U চাপলে তাকে গুগল বা অন্য পেজে পাঠিয়ে দিতে পারেন (ইচ্ছাধীন)
+            if (e.ctrlKey && e.keyCode === 85) {
+                window.location.replace("https://google.com");
+            }
+            return false;
+        }
+    };
+
+    // ৩. ছবি টেনে নেওয়া (Drag) বন্ধ করা
+    document.ondragstart = function() { return false; };
+</script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
