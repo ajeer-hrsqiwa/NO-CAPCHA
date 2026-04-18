@@ -5,39 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajeer HR Solutions</title>
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-
-<style>
-    /* টেক্সট সিলেক্ট করা বন্ধ করার জন্য */
-    body {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-</style>
-
-<script>
-    // ১. রাইট ক্লিক বন্ধ করা
-    document.addEventListener('contextmenu', e => e.preventDefault());
-
-    // ২. কিবোর্ড শর্টকাট (Ctrl+C, Ctrl+U, F12) এবং সোর্স কোড দেখা বন্ধ করা
-    document.onkeydown = function(e) {
-        if (
-            e.keyCode === 123 || // F12
-            (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 83)) || // Ctrl+C, U, S
-            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) // Ctrl+Shift+I/J
-        ) {
-            // কেউ Ctrl+U চাপলে তাকে গুগল বা অন্য পেজে পাঠিয়ে দিতে পারেন (ইচ্ছাধীন)
-            if (e.ctrlKey && e.keyCode === 85) {
-                window.location.replace("https://google.com");
-            }
-            return false;
-        }
-    };
-
-    // ৩. ছবি টেনে নেওয়া (Drag) বন্ধ করা
-    document.ondragstart = function() { return false; };
-</script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -217,7 +184,7 @@
                     <div class="p-5 space-y-4 mobile-align">
                         <div>
                             <p class="text-[11px] label-text mb-0.5"><span class="lang-ar">اسم العامل:</span><span class="lang-en hidden font-en">Laborer's name:</span></p>
-                            <p class="font-bold text-[#1e293b] text-[14px]">Iftikhar Ahmed Muhammad Nawaz</p>
+                            <p class="font-bold text-[#1e293b] text-[14px]">Mozibur Rahman Sagor</p>
                         </div>
                         <div>
                             <p class="text-[11px] label-text mb-1.5"><span class="lang-ar">حالة التصريح:</span><span class="lang-en hidden font-en">Permit status:</span></p>
@@ -225,8 +192,8 @@
                                 <span class="lang-ar">ساري</span><span class="lang-en hidden font-en">Active</span>
                             </span>
                         </div>
-                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">تاريخ بداية التصريح:</span><span class="lang-en hidden font-en">Start date:</span></p><p class="font-bold font-en">2026-04-18</p></div>
-                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">تاريخ انتهاء التصريح:</span><span class="lang-en hidden font-en">Expiration date:</span></p><p class="font-bold font-en">2027-04-18</p></div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">تاريخ بداية التصريح:</span><span class="lang-en hidden font-en">Start date:</span></p><p class="font-bold font-en">2025-09-01</p></div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">تاريخ انتهاء التصريح:</span><span class="lang-en hidden font-en">Expiration date:</span></p><p class="font-bold font-en">2026-05-22</p></div>
                     </div>
                 </div>
 
@@ -238,9 +205,9 @@
                     <div class="p-5 space-y-4 mobile-align">
                         <div>
                             <p class="text-[11px] label-text mb-0.5"><span class="lang-ar">اسم المنشأة:</span><span class="lang-en hidden font-en">Establishment name:</span></p>
-                            <p class="font-bold text-[#1e293b] leading-relaxed">شركة اي ام الدولية للمقاولات العامة</p>
+                            <p class="font-bold text-[#1e293b] leading-relaxed">شركة فرع شركة السويدي اليكتريك لمشروعات نظم القوى ش.م</p>
                         </div>
-                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">رقم المنشأة:</span><span class="lang-en hidden font-en">Establishment number:</span></p><p class="font-bold font-en">27-46412</p></div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">رقم المنشأة:</span><span class="lang-en hidden font-en">Establishment number:</span></p><p class="font-bold font-en">9-1346646</p></div>
                     </div>
                 </div>
 
@@ -250,8 +217,8 @@
                         <h2 class="font-bold text-[13px] lang-en hidden font-en uppercase">Istiqdam Company</h2>
                     </div>
                     <div class="p-5 space-y-4 mobile-align">
-                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">اسم المنشأة:</span><span class="lang-en hidden font-en">Establishment name:</span></p><p class="font-bold text-[#1e293b]">مؤسسة غانم مطلق بن غانم الدوسري للنقليات</p></div>
-                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">رقم المنشأة:</span><span class="lang-en hidden font-en">Establishment number:</span></p><p class="font-bold font-en">1-355278</p></div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">اسم المنشأة:</span><span class="lang-en hidden font-en">Establishment name:</span></p><p class="font-bold text-[#1e293b]">شركة مهارة للموارد البشرية</p></div>
+                        <div><p class="text-[11px] label-text mb-0.5"><span class="lang-ar">رقم المنشأة:</span><span class="lang-en hidden font-en">Establishment number:</span></p><p class="font-bold font-en">1-355270</p></div>
                     </div>
                 </div>
             </div>
